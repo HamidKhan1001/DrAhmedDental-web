@@ -1,0 +1,206 @@
+import { readFileSync } from 'node:fs';
+import * as THREE from 'three';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { Registry } from '../anatomy/registry';
+import type { Manifest } from '../anatomy/types';
+import { actions, initialState, setState } from '../state/store';
+import { Animator } from './animator';
+import { CameraRig } from './camera';
+import { Engine } from './Engine';
+
+const registry = new Registry(JSON.parse(readFileSync('public/models/manifest.json', 'utf8')) as Manifest);
+
+/** Reproduce an already-loaded tooth still moving home from arch/board dissection. */
+function movingTooth() {
+  const animator = new Animator();
+  const camera = new THREE.PerspectiveCamera(32, 1440 / 900, .05, 200);
+  camera.position.set(8, 6, 30);
+  const rig: CameraRig = Object.assign(Object.create(CameraRig.prototype) as CameraRig, {
+    camera, animator, controls: { target: new THREE.Vector3(8, 6, 0), minDistance: .9 },
+    pivot: new THREE.Vector3(), mode_: 'free',
+  });
+  const entries = new Map<string, { mesh: THREE.Mesh; visual: 'on' }>();
+  for (const key of registry.meshesOf('tooth-36')) {
+    const bounds = registry.manifest.meshes[key]?.bounds;
+    if (!bounds) continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.boundingBox = new THREE.Box3(new THREE.Vector3(...bounds[0]), new THREE.Vector3(...bounds[1]));
+    const mesh = new THREE.Mesh(geometry);
+    mesh.position.set(5, 3, -2);
+    entries.set(key, { mesh, visual: 'on' });
+  }
+  const engine: Engine = Object.assign(Object.create(Engine.prototype) as Engine, {
+    registry, rig, entries, animator, disposed: false, insetsKnown: true,
+    insets: { right: 0, bottom: 0, left: 0, top: 0 },
+    container: { clientWidth: 1440, clientHeight: 900 },
+    insetTarget: { right: 0, bottom: 0, left: 0, top: 0 },
+    ensureTooth: vi.fn().mockResolvedValue(undefined),
+  });
+  return { engine, rig, animator, entries };
+}
+
+describe('entering tooth exploration', () => {
+  beforeEach(() => {
+    setState({ ...initialState });
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { callback(0); return 1; });
+  });
+  afterEach(() => { vi.unstubAllGlobals(); setState({ ...initialState }); });
+
+  it('frames a selected guide tooth from its dental direction in the space clear of captions and panels', () => {
+    const { engine, rig, animator, entries } = movingTooth();
+    // The guide chooses the tooth from search before opening its dissection.
+    rig.setMode('fixed');
+    rig.pivot.set(0, 8, 0);
+    for (const entry of entries.values()) entry.mesh.position.set(0, 0, 0);
+    setState({ guideOpen: true, selectedId: 'tooth-36' });
+    engine.setInsets(0, 280, 0, 300);
+    engine.focus('tooth-36');
+    animator.tick(1);
+    const bounds = engine.boundsOf('tooth-36', true, true);
+    const center = bounds.getCenter(new THREE.Vector3());
+    expect(rig.controls.target.distanceTo(center)).toBeLessThan(1e-10);
+    expect(rig.pivot.distanceTo(center)).toBeLessThan(1e-10);
+    rig.camera.updateMatrixWorld();
+    for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+      const point = new THREE.Vector3(x, y, z).project(rig.camera);
+      const py = (1 - point.y) * 900 / 2;
+      expect(py).toBeGreaterThan(300);
+      expect(py).toBeLessThan(900 - 280);
+    }
+  });
+
+  it.each([1, 2] as const)('centres the settled tooth instead of its moving position from phase %i', async (explodePhase) => {
+    const { engine, rig, animator } = movingTooth();
+    setState({ explode: 1, explodePhase, selectedId: 'tooth-36' });
+    engine.setInsets(376, 230, 307);
+    const settled = engine.boundsOf('tooth-36', true, true).getCenter(new THREE.Vector3());
+    expect(engine.boundsOf('tooth-36', true).getCenter(new THREE.Vector3()).distanceTo(settled)).toBeGreaterThan(1);
+    await engine.exploreTooth(36);
+    animator.tick(1);
+    expect(rig.controls.target.distanceTo(settled)).toBeLessThan(1e-10);
+    expect(rig.pivot.distanceTo(settled)).toBeLessThan(1e-10);
+    rig.camera.updateMatrixWorld();
+    expect(settled.clone().project(rig.camera).x).toBeCloseTo((307 - 376) / 1440, 8);
+    expect(settled.clone().project(rig.camera).y).toBeCloseTo(230 / 900, 8);
+    const bounds = engine.boundsOf('tooth-36', true, true);
+    for (const x of [bounds.min.x, bounds.max.x]) for (const y of [bounds.min.y, bounds.max.y]) for (const z of [bounds.min.z, bounds.max.z]) {
+      const point = new THREE.Vector3(x, y, z).project(rig.camera);
+      const px = (point.x + 1) * 1440 / 2, py = (1 - point.y) * 900 / 2;
+      expect(px).toBeGreaterThan(307);
+      expect(px).toBeLessThan(1440 - 376);
+      expect(py).toBeGreaterThan(50);
+      expect(py).toBeLessThan(900 - 230);
+    }
+  });
+
+  it.each(['exit', 'switch'] as const)('does not steal the camera after a pending tooth load if the user chooses to %s', async (choice) => {
+    const { engine, rig, animator } = movingTooth();
+    let loaded!: () => void;
+    engine.ensureTooth = () => new Promise<void>((resolve) => { loaded = resolve; });
+    const target = rig.controls.target.clone();
+    const exploring = engine.exploreTooth(36);
+    if (choice === 'exit') actions.exitDissect();
+    else actions.enterDissect(11);
+    loaded();
+    await exploring;
+    expect(animator.active).toBe(false);
+    expect(rig.controls.target.equals(target)).toBe(true);
+  });
+});
+
+describe('sinus picking through anatomical context', () => {
+  afterEach(() => setState({ ...initialState }));
+  const pick = (hits: { owner: string; visual: 'on' | 'ghost'; sinus?: boolean }[]) => {
+    const engine = Object.assign(Object.create(Engine.prototype) as { pick: () => string | null }, {
+      developmentScene: { active: false }, rig: { camera: {} }, pointer: new THREE.Vector2(),
+      raycaster: { setFromCamera() {} },
+      *rayHits() { for (const entry of hits) yield { entry }; },
+    });
+    return engine.pick();
+  };
+  it.each(['maxillary', 'frontal', 'sphenoidal'])('reaches a ghosted %s sinus behind ghosted bone', (group) => {
+    setState({ studyView: 'sinuses' });
+    expect(pick([
+      { owner: 'frontal-bone', visual: 'ghost' },
+      { owner: `${group}-sinus-left`, visual: 'ghost', sinus: true },
+      { owner: 'tooth-11', visual: 'on' },
+    ])).toBe(`${group}-sinus-left`);
+  });
+  it('keeps solid bone in front of an obscured sinus selectable', () => {
+    setState({ studyView: 'sinuses' });
+    expect(pick([{ owner: 'frontal-bone', visual: 'on' }, { owner: 'frontal-sinus-left', visual: 'on', sinus: true }])).toBe('frontal-bone');
+  });
+  it('chooses the nearest of overlapping sinus volumes', () => {
+    setState({ studyView: 'sinuses' });
+    expect(pick([{ owner: 'sphenoidal-sinus-right', visual: 'ghost', sinus: true }, { owner: 'sphenoidal-sinus-left', visual: 'on', sinus: true }])).toBe('sphenoidal-sinus-right');
+  });
+  it('retains normal opaque-first picking outside sinus study', () => {
+    setState({ studyView: null });
+    expect(pick([{ owner: 'maxillary-sinus-left', visual: 'ghost', sinus: true }, { owner: 'tooth-11', visual: 'on' }])).toBe('tooth-11');
+  });
+});
+
+describe('nerve preset framing', () => {
+  beforeEach(() => {
+    setState({ ...initialState });
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { callback(0); return 1; });
+  });
+  afterEach(() => { vi.unstubAllGlobals(); setState({ ...initialState }); });
+
+  it.each([
+    { width: 1280, height: 720, right: 414, left: 304, bottom: 160, top: 0 },
+    { width: 390, height: 844, right: 0, left: 0, bottom: 360, top: 280 },
+  ])('frames the visible nerves clear of the guide at $width × $height', async ({ width, height, right, left, bottom, top }) => {
+    const { engine, rig, animator } = movingTooth();
+    const entries = new Map();
+    const nerves = new THREE.Box3();
+    for (const [owner, x, visual] of [
+      ['inferior-alveolar-nerve-left', -1, 'on'],
+      ['inferior-alveolar-nerve-right', 1, 'on'],
+      ['facial-nerve-right', 20, 'off'],
+      ['frontal-bone', 30, 'ghost'],
+    ] as const) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(.5, 3, .5));
+      mesh.position.set(x, 2, 0);
+      entries.set(owner, { owner, mesh, visual });
+      if (visual === 'on') nerves.union(new THREE.Box3().setFromObject(mesh));
+    }
+    Object.assign(engine, {
+      entries, container: { clientWidth: width, clientHeight: height },
+      loader: { load: vi.fn().mockResolvedValue(new Map()) }, addGeometries: vi.fn(),
+      insetTarget: { right, bottom, left, top },
+    });
+    rig.camera.aspect = width / height;
+    rig.camera.setViewOffset(width, height, (right - left) / 2, (bottom - top) / 2, width, height);
+    await engine.showStudyView('nerves');
+    animator.tick(1);
+    // Caption and tray measurements can arrive after the preset's first camera fit.
+    setState({ guideOpen: true });
+    engine.setInsets(right + 2, bottom + 2, left, top);
+    animator.tick(1);
+    expect(rig.controls.target.distanceTo(nerves.getCenter(new THREE.Vector3()))).toBeLessThan(1e-10);
+    rig.camera.updateMatrixWorld();
+    for (const x of [nerves.min.x, nerves.max.x]) for (const y of [nerves.min.y, nerves.max.y]) for (const z of [nerves.min.z, nerves.max.z]) {
+      const point = new THREE.Vector3(x, y, z).project(rig.camera);
+      const px = (point.x + 1) * width / 2, py = (1 - point.y) * height / 2;
+      expect(px).toBeGreaterThan(left);
+      expect(px).toBeLessThan(width - right);
+      expect(py).toBeGreaterThan(top);
+      expect(py).toBeLessThan(height - bottom);
+    }
+  });
+
+  it('does not refocus a late nerve download after leaving the preset', async () => {
+    const { engine, rig } = movingTooth();
+    let loaded!: () => void;
+    Object.assign(engine, {
+      loader: { load: () => new Promise<void>(resolve => { loaded = resolve; }) }, addGeometries: vi.fn(),
+    });
+    const focus = vi.spyOn(rig, 'focusSphere');
+    const showing = engine.showStudyView('nerves');
+    actions.resetGuideScene();
+    loaded();
+    await showing;
+    expect(focus).not.toHaveBeenCalled();
+  });
+});
