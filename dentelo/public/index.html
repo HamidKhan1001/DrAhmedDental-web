@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Ahmed Dental Clinic</title>
+  <meta name="theme-color" content="#fbf7ee">
+  <script>
+    try { if (localStorage.getItem('ds.theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+  </script>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css?v=10">
+  <link rel="stylesheet" href="./assets/css/scope.css?v=10">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&display=swap"
+    rel="stylesheet">
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header">
+
+    <div class="header-top">
+      <div class="container">
+
+        <ul class="contact-list">
+
+          <li class="contact-item">
+            <ion-icon name="mail-outline"></ion-icon>
+
+            <a href="mailto:info@example.com" class="contact-link">info@example.com</a>
+          </li>
+
+          <li class="contact-item">
+            <ion-icon name="call-outline"></ion-icon>
+
+            <a href="tel:+0000000000" class="contact-link">+00 000 000 0000</a>
+          </li>
+
+        </ul>
+
+        <ul class="social-list">
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="header-bottom" data-header>
+      <div class="container">
+
+        <a href="#" class="logo">Dr. Ahmed <span class="logo-sub">Dental Clinic</span></a>
+
+        <nav class="navbar container" data-navbar>
+          <ul class="navbar-list">
+
+            <li>
+              <a href="#home" class="navbar-link" data-nav-link>Home</a>
+            </li>
+
+            <li>
+              <a href="#service" class="navbar-link" data-nav-link>Services</a>
+            </li>
+
+            <li>
+              <a href="#about" class="navbar-link" data-nav-link>About</a>
+            </li>
+
+            <li>
+              <a href="#doctor" class="navbar-link" data-nav-link>Doctor</a>
+            </li>
+
+            <li>
+              <a href="./explorer/" class="navbar-link" data-nav-link>3D Explorer</a>
+            </li>
+
+            <li>
+              <a href="#blog" class="navbar-link" data-nav-link>Guides</a>
+            </li>
+
+            <li>
+              <a href="#" class="navbar-link" data-nav-link>Contact</a>
+            </li>
+
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme">
+            <ion-icon name="moon-outline" class="icon-moon" aria-hidden="true"></ion-icon>
+            <ion-icon name="sunny-outline" class="icon-sun" aria-hidden="true"></ion-icon>
+          </button>
+
+          <a href="#book" class="btn" data-book>Book appointment</a>
+        </div>
+
+        <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
+          <ion-icon name="menu-sharp" aria-hidden="true" class="menu-icon"></ion-icon>
+          <ion-icon name="close-sharp" aria-hidden="true" class="close-icon"></ion-icon>
+        </button>
+
+      </div>
+    </div>
+
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="section hero" id="home" style="background-image: url('./assets/images/hero-bg.png')"
+        aria-label="hero">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="section-subtitle">Welcome To Dr. Ahmed Dental Clinic</p>
+
+            <h1 class="h1 hero-title">Gentle, Expert Dental Care</h1>
+
+            <p class="hero-text">
+              Personal dental care from one dentist who knows you, from routine check-ups to root canals,
+              explained with interactive 3D models so you always see what is happening and why.
+            </p>
+
+            <form class="hero-form" data-callback-form novalidate>
+              <input type="tel" name="phone" aria-label="Your phone number" placeholder="Your phone number" autocomplete="tel"
+                maxlength="20" required class="email-field">
+
+              <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+
+              <button type="submit" class="btn">Get Call Back</button>
+            </form>
+
+            <p class="callback-msg" data-callback-msg role="status" hidden></p>
+
+            <p class="hero-or">or <a href="#book" data-book>book an appointment online</a></p>
+
+          </div>
+
+          <figure class="hero-banner">
+            <img src="./assets/images/hero-banner.png" width="587" height="839" alt="Dentist smiling" class="w-100 hero-photo">
+
+            <div class="tooth-stage" data-tooth-stage aria-label="Interactive 3D model of a lower first molar. Drag to rotate.">
+              <div class="tooth-hud">
+                <span class="tooth-eyebrow">Permanent tooth</span>
+                <span class="tooth-name">Mandibular first molar</span>
+                <span class="tooth-meta">
+                  <span class="tooth-tag">FDI 36</span><span class="tooth-tag">UNI 19</span><span class="tooth-tag">3 canals</span>
+                </span>
+              </div>
+              <p class="tooth-hint">Drag to rotate</p>
+              <div class="tooth-controls">
+                <div class="tooth-seg" role="group" aria-label="Tooth view">
+                  <button type="button" data-tooth-mode="surface" aria-pressed="true">Surface</button>
+                  <button type="button" data-tooth-mode="inside" aria-pressed="false">Inside</button>
+                </div>
+                <a href="#explore" class="tooth-open" data-explore-view="tooth/36/dissect">
+                  <ion-icon name="cube-outline" aria-hidden="true"></ion-icon><span>Open in explorer</span>
+                </a>
+              </div>
+            </div>
+          </figure>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SERVICE
+      -->
+
+      <section class="section service" id="service" aria-label="service">
+        <div class="container">
+
+          <p class="section-subtitle text-center">Our Services</p>
+
+          <h2 class="h2 section-title text-center">What We Provide</h2>
+
+          <ul class="service-list">
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-1.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Root Canal</h3>
+
+                  <p class="card-text">
+                    Gentle treatment that removes infected pulp from inside the tooth and seals its canals, so you keep your natural tooth.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="tooth/36/dissect">
+                    <ion-icon name="cube-outline"></ion-icon> See the canals in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-2.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Alignment Teeth</h3>
+
+                  <p class="card-text">
+                    Clear aligners and braces to straighten crowded or gapped teeth and improve how your bite comes together.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="">
+                    <ion-icon name="cube-outline"></ion-icon> See the full bite in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-3.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Cosmetic Teeth</h3>
+
+                  <p class="card-text">
+                    Whitening, bonding and veneers to brighten and reshape your smile, planned around your natural teeth.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="tooth/11">
+                    <ion-icon name="cube-outline"></ion-icon> See a front tooth in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="service-banner">
+              <figure>
+                <img src="./assets/images/service-banner.png" width="409" height="467" loading="lazy"
+                  alt="service banner" class="w-100">
+              </figure>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-4.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Oral Hygiene</h3>
+
+                  <p class="card-text">
+                    Professional cleaning and scaling, plus simple home-care advice to keep gums healthy and breath fresh.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="structure/gingiva">
+                    <ion-icon name="cube-outline"></ion-icon> See the gums in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-5.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Live Advisory</h3>
+
+                  <p class="card-text">
+                    Not sure what you need? Ask Dr. Ahmed and get a clear answer, often with the 3D model on screen.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="">
+                    <ion-icon name="cube-outline"></ion-icon> Tour the mouth in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <img src="./assets/images/service-icon-6.png" width="100" height="100" loading="lazy"
+                    alt="" class="w-100">
+                </div>
+
+                <div>
+                  <h3 class="h3 card-title">Cavity Inspection</h3>
+
+                  <p class="card-text">
+                    Careful check-ups, with X-rays when needed, to find decay early while fillings are still small.
+                  </p>
+
+                  <a href="#explore" class="card-3d-link" data-explore-view="tooth/46/dissect">
+                    <ion-icon name="cube-outline"></ion-icon> Look inside a molar in 3D
+                  </a>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about" id="about" aria-label="about">
+        <div class="container">
+
+          <figure class="about-banner">
+            <img src="./assets/images/about-banner.png" width="470" height="538" loading="lazy" alt="about banner"
+              class="w-100">
+          </figure>
+
+          <div class="about-content">
+
+            <p class="section-subtitle">About Us</p>
+
+            <h2 class="h2 section-title">We Care For Your Dental Health</h2>
+
+            <p class="section-text section-text-1">
+              At Dr. Ahmed Dental Clinic you see the same dentist at every visit. That means unhurried appointments,
+              a treatment plan that fits your life, and a dentist who already knows your history.
+            </p>
+
+            <p class="section-text">
+              We believe you should understand your own teeth. Every consultation can use an interactive 3D model,
+              so before you decide on any treatment we can show you the inside of a molar, where a nerve runs,
+              or exactly what a root canal does.
+            </p>
+
+            <a href="#doctor" class="btn">Meet Dr. Ahmed</a>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #DOCTOR
+      -->
+
+      <section class="section doctor" id="doctor" aria-label="doctor">
+        <div class="container">
+
+          <p class="section-subtitle text-center">Meet Your Dentist</p>
+
+          <h2 class="h2 section-title text-center">Dr. Ahmed</h2>
+
+          <div class="doctor-profile">
+
+            <div class="doctor-card">
+              <div class="card-banner img-holder" style="--width: 460; --height: 500;">
+                <img src="./assets/images/doctor-1.png" width="460" height="500" loading="lazy" alt="Dr. Ahmed"
+                  class="img-cover">
+              </div>
+            </div>
+
+            <div class="doctor-bio">
+
+              <p class="card-subtitle">BDS, MDS &middot; General &amp; Cosmetic Dentist</p>
+
+              <p class="section-text">
+                Write a short introduction here: who you are, where you trained, and why you became a dentist.
+                Patients like to know the person who will be treating them.
+              </p>
+
+              <ul class="doctor-facts">
+                <li><ion-icon name="ribbon-outline"></ion-icon> 10+ years of experience</li>
+                <li><ion-icon name="school-outline"></ion-icon> Degree / university name</li>
+                <li><ion-icon name="medkit-outline"></ion-icon> Member of your dental association</li>
+                <li><ion-icon name="language-outline"></ion-icon> Languages spoken</li>
+              </ul>
+
+              <ul class="card-social-list">
+                <li><a href="#" class="card-social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
+                <li><a href="#" class="card-social-link"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                <li><a href="#" class="card-social-link"><ion-icon name="logo-linkedin"></ion-icon></a></li>
+              </ul>
+
+              <a href="#book" class="btn" data-book>Book an Appointment</a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #3D EXPLORER (Dental Scope)
+      -->
+
+      <section class="section explore" id="explore" aria-label="3D teeth explorer">
+        <div class="container">
+
+          <p class="section-subtitle text-center">Patient Education</p>
+
+          <h2 class="h2 section-title text-center">Explore Your Teeth in 3D</h2>
+
+          <p class="section-text text-center explore-intro">
+            Before your visit, see exactly what Dr. Ahmed is talking about. Rotate the whole mouth, open any of the
+            32 teeth, and look inside at the enamel, nerves and root canals.
+          </p>
+
+          <div class="explore-chips-wrap"><div class="explore-chips" role="toolbar" aria-label="Jump to a 3D view">
+            <button type="button" class="explore-chip is-active" data-explore-view="">Whole Mouth</button>
+            <button type="button" class="explore-chip" data-explore-view="tooth/11">Front Tooth</button>
+            <button type="button" class="explore-chip" data-explore-view="tooth/36/dissect">Inside a Molar</button>
+            <button type="button" class="explore-chip" data-explore-view="tooth/38">Wisdom Tooth</button>
+            <button type="button" class="explore-chip" data-explore-view="structure/gingiva">Gums</button>
+            <button type="button" class="explore-chip" data-explore-view="structure/inferior-alveolar-nerve-left">Jaw Nerve</button>
+          </div></div>
+
+          <div class="explore-frame">
+            <iframe src="./explorer/?simple" data-explore-frame title="Interactive 3D dental anatomy explorer" loading="lazy"
+              allow="fullscreen"></iframe>
+          </div>
+
+          <div class="explore-actions">
+            <a href="./explorer/" class="btn">Open the Full 3D Explorer</a>
+            <a href="./explorer/about/" class="btn btn-quiet">Tooth Library</a>
+          </div>
+
+          <p class="explore-credit text-center">
+            For patient education only, not for diagnosis.
+          </p>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #CTA
+      -->
+
+      <section class="section cta" aria-label="cta">
+        <div class="container">
+
+          <figure class="cta-banner">
+            <img src="./assets/images/cta-banner.png" width="1056" height="1076" loading="lazy" alt="Dentist holding a dental model"
+              class="w-100">
+          </figure>
+
+          <div class="cta-content">
+
+            <p class="section-subtitle">Book a Dental Appointment</p>
+
+            <h2 class="h2 section-title">We Are Open and Welcoming New Patients</h2>
+
+            <a href="#book" class="btn" data-book>Book appointment</a>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #BLOG
+      -->
+
+      <section class="section blog" id="blog" aria-label="patient guides">
+        <div class="container">
+
+          <p class="section-subtitle text-center">Learn in 3D</p>
+
+          <h2 class="h2 section-title text-center">Patient Guides</h2>
+
+          <ul class="blog-list">
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="card-banner img-holder" style="--width: 1180; --height: 800;">
+                  <img src="./assets/images/blog-1.jpg" width="1180" height="800" loading="lazy" alt="" class="img-cover">
+
+                  <div class="card-badge">
+                    <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+                    <span>Root canal &middot; 3D</span>
+                  </div>
+                </figure>
+
+                <div class="card-content">
+
+                  <h3 class="h3">
+                    <a href="#explore" class="card-title" data-explore-view="tooth/36/dissect">What actually happens during a root canal?</a>
+                  </h3>
+
+                  <p class="card-text">
+                    A step-by-step look inside a molar: the pulp, the canals, and how cleaning and sealing them saves the tooth.
+                  </p>
+
+                  <a href="#explore" class="card-link" data-explore-view="tooth/36/dissect">Explore in 3D</a>
+                  <a href="./explorer/teeth/36-mandibular-left-first-molar/" class="card-link card-link--quiet">Read the guide</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="card-banner img-holder" style="--width: 1180; --height: 800;">
+                  <img src="./assets/images/blog-2.jpg" width="1180" height="800" loading="lazy" alt="" class="img-cover">
+
+                  <div class="card-badge">
+                    <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+                    <span>Wisdom teeth &middot; 3D</span>
+                  </div>
+                </figure>
+
+                <div class="card-content">
+
+                  <h3 class="h3">
+                    <a href="#explore" class="card-title" data-explore-view="tooth/38">Wisdom teeth: why they cause trouble</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Third molars often lack room to come in straight. See where they sit and how close they are to the jaw nerve.
+                  </p>
+
+                  <a href="#explore" class="card-link" data-explore-view="tooth/38">Explore in 3D</a>
+                  <a href="./explorer/teeth/38-mandibular-left-third-molar/" class="card-link card-link--quiet">Read the guide</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="blog-card">
+
+                <figure class="card-banner img-holder" style="--width: 1180; --height: 800;">
+                  <img src="./assets/images/blog-3.jpg" width="1180" height="800" loading="lazy" alt="" class="img-cover">
+
+                  <div class="card-badge">
+                    <ion-icon name="cube-outline" aria-hidden="true"></ion-icon>
+                    <span>Gum care &middot; 3D</span>
+                  </div>
+                </figure>
+
+                <div class="card-content">
+
+                  <h3 class="h3">
+                    <a href="#explore" class="card-title" data-explore-view="structure/gingiva">Healthy gums, healthy teeth</a>
+                  </h3>
+
+                  <p class="card-text">
+                    Gums anchor every tooth. See what they cover, and why cleaning below the gumline matters so much.
+                  </p>
+
+                  <a href="#explore" class="card-link" data-explore-view="structure/gingiva">Explore in 3D</a>
+                  <a href="./explorer/anatomy/gingiva/" class="card-link card-link--quiet">Read the guide</a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">Dr. Ahmed <span class="logo-sub">Dental Clinic</span></a>
+
+          <p class="footer-text">
+            One dentist, one clear plan. Personal dental care for the whole family, explained in 3D.
+          </p>
+
+          <div class="schedule">
+            <div class="schedule-icon">
+              <ion-icon name="time-outline"></ion-icon>
+            </div>
+
+            <span class="span">
+              Monday - Saturday:<br>
+              9:00 am &ndash; 10:00 pm
+            </span>
+          </div>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other Links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Home</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">About Us</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Services</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="./explorer/" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">3D Explorer</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="./explorer/about/" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Tooth Library</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#doctor" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">About the Doctor</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#blog" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Patient Guides</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Root Canal</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Alignment Teeth</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Cosmetic Teeth</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Oral Hygiene</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Live Advisory</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#service" class="footer-link">
+              <ion-icon name="add-outline"></ion-icon>
+
+              <span class="span">Cavity Inspection</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <address class="item-text">
+              Clinic street address,<br>
+              City, Postcode
+            </address>
+          </li>
+
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="call-outline"></ion-icon>
+            </div>
+
+            <a href="tel:+0000000000" class="footer-link">+00 000 000 0000</a>
+          </li>
+
+          <li class="footer-item">
+            <div class="item-icon">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <a href="mailto:hello@example.com" class="footer-link">hello@example.com</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2026 Dr. Ahmed Dental Clinic. All Rights Reserved.
+          <span class="attribution">3D anatomy and tooth texts adapted from <a href="./explorer/CREDITS.md" target="_blank" rel="noopener">Dental Scope</a> (MIT, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>), models from BodyParts3D &copy; DBCLS, <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en" target="_blank" rel="noopener">CC BY-SA 2.1 JP</a>.</span>
+        </p>
+
+        <ul class="social-list">
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="caret-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js" defer></script>
+  <script src="./assets/js/site.js?v=10" defer></script>
+  <script src="./assets/js/booking.js?v=10" defer></script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./assets/vendor/three/three.module.js",
+        "three/addons/": "./assets/vendor/three/addons/"
+      }
+    }
+  </script>
+  <script type="module" src="./assets/js/hero3d.js?v=10"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

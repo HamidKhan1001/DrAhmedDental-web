@@ -1,0 +1,18 @@
+# local data and secrets (bookings, admin password)
+dentelo/data/
+.env*
+.vercel/
+
+node_modules/
+.DS_Store
+*.log
+.claude/
+
+# 210 MB of tooth-review screenshots (kept on disk, not needed to deploy); keep the ones docs link to
+dental-scope/docs/screenshots/tooth-review/*
+!dental-scope/docs/screenshots/tooth-review/*.json
+!dental-scope/docs/screenshots/tooth-review/index.html
+!dental-scope/docs/screenshots/tooth-review/revised-*-off.jpg
+!dental-scope/docs/screenshots/tooth-review/revised/
+dental-scope/docs/screenshots/tooth-review/revised/*
+!dental-scope/docs/screenshots/tooth-review/revised/mobile-dark-16-on.png

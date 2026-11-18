@@ -1,0 +1,809 @@
+/*-----------------------------------*\
+  #DENTAL SCOPE THEME
+  The clinic site dressed in Dental Scope's design language:
+  warm paper, near-black ink, one cobalt accent, Source Serif 4
+  display type, Inter Tight UI, JetBrains Mono micro-labels,
+  hairline panels. Light + dark, shared with the 3D explorer
+  through the same `ds.theme` preference.
+  Tokens mirror dental-scope/src/styles/tokens.css.
+\*-----------------------------------*/
+
+:root {
+  color-scheme: light;
+
+  --font-ui: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --bg-0: #fbf7ee;
+  --bg-1: #fcf9f2;
+  --stage-0: #f2eadb;
+  --stage-1: #fbf7ee;
+  --panel: rgba(255, 252, 246, 0.94);
+  --panel-solid: #fffcf6;
+  --panel-border: rgba(28, 24, 18, 0.16);
+  --panel-shadow: 0 1px 0 rgba(28, 24, 18, 0.04), 0 8px 24px rgba(40, 32, 20, 0.07);
+
+  --ink: #17150f;
+  --muted: #58534a;
+  --faint: #6f695d;
+  --line: rgba(28, 24, 18, 0.12);
+  --hover: rgba(28, 24, 18, 0.05);
+  --press: rgba(28, 24, 18, 0.1);
+
+  --accent: #2a3bd1;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(42, 59, 209, 0.1);
+  --accent-glow: rgba(42, 59, 209, 0.45);
+  --highlight: #3346f0;
+  --focus: #2a3bd1;
+
+  --radius-lg: 10px;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 180ms;
+
+  /* always-dark surfaces (CTA band, footer) use Dental Scope's dark palette */
+  --night-0: #f4ecdc;
+  --night-1: #f7f0e2;
+  --night-ink: #17150f;
+  --night-muted: #58534a;
+  --night-line: rgba(28, 24, 18, 0.12);
+  --night-accent: #2a3bd1;
+
+  /* remap the template's own tokens onto Dental Scope's */
+  --royal-blue-light: var(--accent);
+  --carolina-blue: var(--accent);
+  --flickr-blue_30: var(--accent-soft);
+  --oxford-blue-1: var(--ink);
+  --oxford-blue-2: var(--ink);
+  --sonic-silver: var(--muted);
+  --light-gray: var(--line);
+  --gainsboro_50: var(--line);
+  --cultured: var(--hover);
+  --lavender-web: var(--accent-soft);
+  --light-steel-blue: var(--night-muted);
+  --gradient: linear-gradient(var(--accent), var(--accent));
+  --ff-poppins: var(--font-display);
+  --ff-roboto: var(--font-ui);
+  --radius-4: var(--radius);
+  --radius-6: var(--radius-lg);
+  --shadow-1: var(--panel-shadow);
+  --shadow-2: var(--panel-shadow);
+  --shadow-3: var(--panel-shadow);
+  --shadow-4: none;
+  --shadow-5: var(--panel-shadow);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg-0: #11100e;
+  --bg-1: #1a1916;
+  --stage-0: var(--bg-0);
+  --stage-1: var(--bg-1);
+  --panel: rgba(27, 26, 23, 0.93);
+  --panel-solid: #1c1b18;
+  --panel-border: rgba(240, 234, 222, 0.14);
+  --panel-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.4);
+  --ink: #eeeae1;
+  --muted: #aca597;
+  --faint: #8f897c;
+  --line: rgba(240, 234, 222, 0.12);
+  --hover: rgba(240, 234, 222, 0.06);
+  --press: rgba(240, 234, 222, 0.1);
+  --accent: #97a2ff;
+  --accent-ink: #0d0f2a;
+  --accent-soft: rgba(151, 162, 255, 0.14);
+  --accent-glow: rgba(151, 162, 255, 0.45);
+  --highlight: #7b88ff;
+  --focus: #a9b2ff;
+  --night-0: #11100e;
+  --night-1: #1a1916;
+  --night-ink: #eeeae1;
+  --night-muted: #aca597;
+  --night-line: rgba(240, 234, 222, 0.12);
+  --night-accent: #97a2ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}
+
+/* ---------- base ---------- */
+
+html { overflow-x: clip; }
+
+body {
+  background: var(--bg-0);
+  color: var(--muted);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+::selection { background: var(--accent-soft); color: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.h1, .h2, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 60;
+}
+
+.h1 { line-height: 1.05; }
+.h2 { line-height: 1.1; }
+.h3 { font-size: 2.1rem; }
+
+.section-text, .card-text, .hero-text { color: var(--muted); }
+
+/* Dental Scope eyebrow: italic serif in muted ink */
+.section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.cta .section-subtitle { color: var(--night-muted); }
+.cta .section-subtitle, .cta .section-title { text-shadow: none; }
+
+/* mono micro-label, used for small metadata */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 14px 22px;
+  border-radius: var(--radius);
+  box-shadow: none;
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.btn:is(:hover, :focus-visible) { background: var(--highlight); }
+.btn:active { transform: translateY(1px); }
+
+/* ---------- header ---------- */
+
+.header-top {
+  background: var(--night-0) !important;
+  color: var(--night-muted);
+  border-bottom: 1px solid var(--night-line);
+}
+
+.header-top :is(.header-top-link, .social-link, a, span) { color: var(--night-muted); }
+.header-top .social-link:is(:hover, :focus) { color: var(--night-ink); }
+
+.header-bottom.active {
+  background: var(--panel);
+  border-bottom: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.8rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.logo-sub {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.footer-brand .logo { color: var(--night-ink); }
+.footer-brand .logo-sub { color: var(--night-muted); }
+
+.navbar { background: var(--panel-solid); border: 1px solid var(--panel-border); }
+@media (min-width: 992px) { .navbar { background: none; border: 0; box-shadow: none; } }
+
+.navbar-link {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  color: var(--ink) !important;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+
+.navbar-link:is(:hover, :focus-visible) { color: var(--accent) !important; }
+
+.nav-toggle-btn { color: var(--ink); border-color: var(--line); }
+
+.header-bottom .btn { flex-shrink: 0; white-space: nowrap; }
+
+/* theme toggle (Dental Scope icon button) */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius);
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: var(--panel-shadow);
+  transition: background var(--dur) var(--ease);
+}
+
+.theme-toggle:hover { background: var(--hover); }
+.theme-toggle ion-icon { font-size: 1.8rem; }
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme='dark'] .theme-toggle .icon-sun { display: block; }
+:root[data-theme='dark'] .theme-toggle .icon-moon { display: none; }
+
+.header-actions { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- hero ---------- */
+
+.hero {
+  background:
+    radial-gradient(1200px 800px at 75% 40%, var(--stage-1) 0%, transparent 70%),
+    linear-gradient(180deg, var(--stage-1) 0%, var(--stage-0) 100%) !important;
+}
+
+.hero-form {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--panel-shadow);
+  padding: 8px;
+}
+
+.hero-form .email-field {
+  background: transparent;
+  color: var(--ink);
+  border-radius: var(--radius);
+  min-height: 52px;
+  margin-block-end: 8px;
+}
+
+.hero-form .email-field::placeholder { color: var(--faint); }
+.hero-form .email-field:focus { outline: none; background: var(--hover); }
+
+@media (min-width: 768px) {
+  .hero-form .email-field { margin-block-end: 0; }
+}
+
+/* ---------- panels (cards) ---------- */
+
+.service-card,
+.blog-card,
+.doctor-card,
+.explore-frame {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--panel-shadow);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.service-card:hover,
+.blog-card:hover,
+.doctor-card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--panel-border)); }
+
+.service-card .card-icon {
+  width: 56px;
+  padding: 8px;
+  border-radius: var(--radius);
+  background: var(--hover);
+}
+
+:root[data-theme='dark'] .service-card .card-icon img { filter: brightness(1.25) saturate(0.9); }
+
+.service-card .card-title, .blog-card .card-title { color: var(--ink); }
+
+.card-3d-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-block-start: 10px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur) var(--ease);
+}
+
+.card-3d-link ion-icon { font-size: 1.5rem; }
+.card-3d-link:is(:hover, :focus-visible) { text-decoration-color: currentColor; }
+
+/* ---------- about / doctor ---------- */
+
+.about .btn, .doctor-bio .btn { display: inline-flex; width: fit-content; }
+
+.doctor-card .card-banner { border-radius: var(--radius); overflow: hidden; background: var(--hover); }
+.doctor-profile .doctor-card { padding: 12px; }
+
+.doctor-bio .card-subtitle {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.doctor-facts li {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.doctor-facts ion-icon { color: var(--accent); }
+
+.card-social-link {
+  background: var(--hover) !important;
+  color: var(--ink) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.card-social-link:is(:hover, :focus-visible) { background: var(--accent) !important; color: var(--accent-ink) !important; }
+
+/* ---------- 3D explorer section ---------- */
+
+.explore { background: transparent; }
+
+.explore-frame { padding: 0; overflow: hidden; }
+
+.explore-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  padding: 3px;
+  margin-inline: auto;
+  margin-block-end: 20px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+
+.explore-chips-wrap { display: flex; justify-content: center; }
+
+.explore-chip {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: background var(--dur), color var(--dur);
+}
+
+.explore-chip:hover { color: var(--ink); background: var(--hover); }
+.explore-chip.is-active { background: var(--ink); color: var(--panel-solid); }
+
+.explore-credit { color: var(--faint); }
+.explore-credit a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 2px; }
+.explore-credit a:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+/* ---------- always-dark bands ---------- */
+
+.cta { background: var(--night-1) !important; border-block: 1px solid var(--night-line); }
+.cta .section-title { color: var(--night-ink); }
+
+.footer-top { background: var(--night-0) !important; color: var(--night-muted); }
+.footer-list-title, .footer-item .item-text, .footer-text, .schedule .span { color: var(--night-muted); }
+.footer-list-title { color: var(--night-ink); font-family: var(--font-display); font-weight: 600; }
+.footer-link { color: var(--night-muted); }
+.footer-link:is(:hover, :focus) { color: var(--night-ink); }
+
+.schedule-icon,
+.footer-item .item-icon {
+  background-image: none !important;
+  background: var(--hover) !important;
+  color: var(--night-accent) !important;
+  border: 1px solid var(--night-line);
+  border-radius: var(--radius) !important;
+}
+
+.footer-bottom { background: var(--night-0) !important; border-top: 1px solid var(--night-line); }
+.copyright { color: var(--night-muted); font-size: 1.3rem; }
+
+.footer .social-link {
+  background: var(--hover) !important;
+  border: 1px solid var(--night-line);
+  border-radius: var(--radius-sm) !important;
+  color: var(--night-ink);
+}
+
+.footer .social-link:is(:hover, :focus) { background: var(--night-accent) !important; color: var(--accent-ink); }
+
+/* ---------- blog ---------- */
+
+.blog-card { overflow: hidden; }
+
+.blog-card .card-badge {
+  background: var(--panel-solid);
+  color: var(--ink);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+}
+
+.blog-card .card-link { color: var(--accent); }
+.blog-card .card-link::after { background-color: var(--accent); }
+
+/* ---------- back to top ---------- */
+
+.back-top-btn {
+  background: var(--ink) !important;
+  color: var(--panel-solid) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--panel-shadow);
+}
+
+/* ---------- hero 3D molar: a calm specimen plate ---------- */
+
+.tooth-stage { display: none; }
+.hero-banner { position: relative; }
+.hero-banner.has-3d { margin-inline-end: 0; }
+.hero-banner.has-3d .hero-photo { display: none; }
+
+.hero-banner.has-3d .tooth-stage {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 620px;
+  margin-inline: auto;
+  z-index: 1;
+  touch-action: pan-y;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--panel-border);
+  background:
+    radial-gradient(60% 50% at 50% 48%, var(--stage-1) 0%, transparent 100%),
+    linear-gradient(180deg, var(--stage-1), var(--stage-0));
+  box-shadow: var(--panel-shadow);
+  overflow: hidden;
+}
+
+/* faint measurement grid, like a specimen photo backdrop */
+.hero-banner.has-3d .tooth-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 80%);
+  opacity: 0.55;
+}
+
+.tooth-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  outline: none;
+}
+
+.tooth-stage.is-dragging .tooth-canvas { cursor: grabbing; }
+
+.tooth-hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.tooth-hud .tooth-eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+
+.tooth-hud .tooth-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.2rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.tooth-hud .tooth-meta { display: flex; gap: 6px; margin-top: 6px; }
+
+.tooth-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  background: var(--hover);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.tooth-controls {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tooth-seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+
+.tooth-seg button {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: background var(--dur), color var(--dur);
+}
+
+.tooth-seg button:hover { color: var(--ink); background: var(--hover); }
+.tooth-seg button[aria-pressed='true'] { background: var(--ink); color: var(--panel-solid); }
+
+.tooth-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 1.3rem;
+  font-weight: 500;
+  transition: background var(--dur);
+}
+
+.tooth-open:hover { background: var(--highlight); }
+.tooth-open ion-icon { font-size: 1.6rem; }
+
+.tooth-hint {
+  position: absolute;
+  right: 16px;
+  top: 18px;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  pointer-events: none;
+}
+
+@media (max-width: 420px) {
+  .tooth-open span { display: none; }
+}
+
+/* ---------- scroll reveal (classes added by dreamy.js) — calm, no blur ---------- */
+
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.js-reveal .reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+.blog-card .card-link { text-transform: none; font-weight: 500; letter-spacing: 0; }
+.blog-card .card-badge ion-icon { color: var(--accent); }
+
+/* ---------- booking ---------- */
+
+.hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
+
+.callback-msg {
+  margin-block-start: 12px;
+  font-size: 1.4rem;
+  color: var(--danger, #a4493d);
+}
+.callback-msg.is-ok { color: var(--ink); }
+.callback-msg.is-ok::before { content: "✓ "; color: var(--accent); font-weight: 600; }
+
+.hero-or { margin-block-start: 14px; font-size: 1.4rem; color: var(--muted); }
+.hero-or a { display: inline; color: var(--accent); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.hero-or a:hover { text-decoration-color: currentColor; }
+
+html.booking-open { overflow: hidden; }
+
+dialog.booking {
+  width: min(560px, calc(100vw - 24px));
+  max-height: min(92vh, 860px);
+  padding: 0;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  background: var(--panel-solid);
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgba(23, 21, 15, 0.25);
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  overflow: hidden;
+}
+
+dialog.booking[open] { display: flex; flex-direction: column; animation: dlg-in 0.22s var(--ease); }
+dialog.booking::backdrop { background: rgba(23, 21, 15, 0.32); backdrop-filter: blur(2px); }
+
+@keyframes dlg-in { from { opacity: 0; transform: translateY(10px) scale(0.99); } }
+@media (prefers-reduced-motion: reduce) { dialog.booking[open] { animation: none; } }
+
+.booking-form { display: flex; flex-direction: column; min-height: 0; max-height: inherit; }
+
+.booking-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 22px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.booking-eyebrow { font-family: var(--font-display); font-style: italic; font-size: 1.45rem; color: var(--muted); }
+
+.booking-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.6rem;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.booking-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius);
+  color: var(--muted);
+  transition: background var(--dur);
+}
+.booking-close:hover { background: var(--hover); color: var(--ink); }
+.booking-close ion-icon { font-size: 2.2rem; }
+
+.booking-body { padding: 16px 22px; overflow-y: auto; display: grid; gap: 14px; }
+
+.field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.field-row { display: grid; gap: 14px; }
+@media (min-width: 520px) { .field-row { grid-template-columns: 1fr 1fr; } }
+
+.field-label { font-size: 1.3rem; font-weight: 500; color: var(--ink); padding: 0; }
+.optional { font-family: var(--font-mono); font-size: 1rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); margin-left: 4px; }
+.field-hint { font-size: 1.05rem; color: var(--faint); }
+
+.booking :is(input, select, textarea) {
+  width: 100%;
+  font: inherit;
+  font-size: 1.5rem;
+  color: var(--ink);
+  background: var(--bg-0);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  min-height: 42px;
+  transition: border-color var(--dur), box-shadow var(--dur);
+}
+.booking textarea { resize: vertical; min-height: 64px; }
+.booking :is(input, select, textarea):focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.booking :is(input, select, textarea)[aria-invalid='true'] { border-color: #a4493d; }
+.booking ::placeholder { color: var(--faint); }
+
+.field-error { font-size: 1.25rem; color: #a4493d; min-height: 0; }
+:root[data-theme='dark'] .field-error, :root[data-theme='dark'] .callback-msg:not(.is-ok) { color: #e08a7e; }
+.field-error:empty { display: none; }
+
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
+.slots-msg { grid-column: 1 / -1; font-size: 1.35rem; color: var(--muted); padding: 10px 12px; border-radius: var(--radius); background: var(--hover); }
+
+.slot {
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-border);
+  background: var(--panel-solid);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  color: var(--ink);
+  transition: background var(--dur), color var(--dur), border-color var(--dur);
+}
+.slot:hover:not(:disabled) { background: var(--hover); border-color: var(--accent); }
+.slot[aria-checked='true'] { background: var(--ink); color: var(--panel-solid); border-color: var(--ink); }
+.slot:disabled { color: var(--faint); background: transparent; border-style: dashed; text-decoration: line-through; cursor: not-allowed; opacity: 0.6; }
+
+.form-error { font-size: 1.35rem; color: #a4493d; background: rgba(164, 73, 61, 0.08); border-radius: var(--radius); padding: 10px 12px; }
+
+.booking-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--line);
+}
+.booking-note { font-size: 1.3rem; color: var(--muted); }
+.booking-submit { flex-shrink: 0; }
+.booking-submit:disabled { opacity: 0.7; cursor: progress; }
+
+.booking-done { padding: 34px 26px 28px; text-align: center; display: grid; gap: 8px; justify-items: center; }
+.done-mark { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); margin-bottom: 6px; }
+.done-mark ion-icon { font-size: 2.8rem; }
+.done-summary { font-size: 1.6rem; color: var(--ink); }
+.done-ref { font-size: 1.25rem; letter-spacing: 0.06em; color: var(--muted); padding: 4px 10px; border-radius: var(--radius-sm); background: var(--hover); }
+.booking-done .btn { margin-top: 12px; }
+.mono { font-family: var(--font-mono); }
+dialog.booking { margin: auto; inset: 0; position: fixed; }
+.booking [hidden], .booking-form[hidden], .booking-done[hidden] { display: none !important; }
+
+/* footer attribution line (licence-required, kept small) */
+.attribution { display: block; font-size: 1.15rem; color: var(--night-muted); margin-block-start: 6px; }
+.attribution a { display: inline; color: inherit; text-decoration: underline; text-decoration-color: var(--night-line); text-underline-offset: 2px; }
+.attribution a:hover { color: var(--night-ink); }
+.footer-bottom .copyright { max-width: none; text-align: left; flex: 1 1 auto; min-width: 0; margin-inline-end: 20px; }
+.explore-actions { gap: 10px; flex-wrap: wrap; }
+.btn-quiet { background: var(--panel-solid); color: var(--ink); border: 1px solid var(--panel-border); }
+.btn-quiet:is(:hover, :focus-visible) { background: var(--hover); color: var(--ink); }
+.blog-card .card-content { display: flex; flex-direction: column; }
+.blog-card .card-link--quiet { color: var(--muted); margin-top: 6px; }
+.blog-card .card-link--quiet::after { background-color: var(--muted); }

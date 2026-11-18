@@ -1,0 +1,13 @@
+{
+  "name": "dr-ahmed-dental-clinic",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dr. Ahmed Dental Clinic website with online booking and 3D teeth explorer.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "build:explorer": "bash scripts/build-explorer.sh"
+  }
+}
